@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Management - Login</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-box {
+            background: white;
+            padding: 30px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h2>Task Management</h2>
+
+    <input type="email" id="email" placeholder="Enter Email">
+
+    <input type="password" id="password" placeholder="Enter Password">
+
+    <button onclick="login()">Login</button>
+
+    <p id="message"></p>
+    <p>
+        Don't have an account?
+        <a href="register.html">Register here</a>
+    </p>
+
+
+
+</div>
+
+<script>
+
+    function login() {
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        fetch("/api/auth/login", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+
+        })
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error("Login failed");
+            }
+
+            return response.json();
+
+        })
+        .then(user => {
+
+            document.getElementById("message").innerText =
+                "Login successful!";
+
+            localStorage.setItem("userId", user.id);
+
+            window.location.href = "dashboard.html";
+
+        })
+        .catch(error => {
+
+            document.getElementById("message").innerText =
+                "Invalid email or password";
+
+        });
+    }
+
+</script>
+
+</body>
+</html>

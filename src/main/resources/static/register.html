@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Task Management - Register</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-box">
+
+        <h1>Task Management</h1>
+
+        <h2>Create Account</h2>
+
+        <input
+                type="text"
+                id="name"
+                placeholder="Enter Name">
+
+        <input
+                type="email"
+                id="email"
+                placeholder="Enter Email">
+
+        <input
+                type="password"
+                id="password"
+                placeholder="Enter Password">
+
+        <button onclick="register()">
+            Register
+        </button>
+
+        <p id="message"></p>
+
+        <p>
+            Already have an account?
+            <a href="login.html">Login here</a>
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function register() {
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value.trim();
+
+
+        if (name === "" ||
+            email === "" ||
+            password === "") {
+
+            document.getElementById("message").innerText =
+                "Please fill all fields";
+
+            return;
+        }
+
+
+        const user = {
+
+            name: name,
+
+            email: email,
+
+            password: password
+        };
+
+
+        fetch("/api/auth/register", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(user)
+
+        })
+
+        .then(response => {
+
+            if (!response.ok) {
+                return response.text().then(text => {
+                    throw new Error(text);
+                });
+            }
+
+            return response.json();
+
+        })
+
+        .then(data => {
+
+            document.getElementById("message").innerText =
+                "Registration successful!";
+
+            setTimeout(() => {
+
+                window.location.href = "login.html";
+
+            }, 1000);
+
+        })
+
+        .catch(error => {
+
+            document.getElementById("message").innerText =
+                error.message;
+
+        });
+
+    }
+
+</script>
+
+</body>
+
+</html>

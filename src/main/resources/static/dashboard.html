@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Task Management Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>Task Management</h1>
+
+    <button class="logout-btn" onclick="logout()">
+        Logout
+    </button>
+
+</div>
+
+
+<div class="container">
+
+    <div class="add-task">
+
+        <h2>➕ Add New Task</h2>
+
+        <input
+                type="text"
+                id="title"
+                placeholder="Task Title">
+
+        <input
+                type="text"
+                id="description"
+                placeholder="Task Description">
+
+        <select id="status">
+            <option value="PENDING">Pending</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="COMPLETED">Completed</option>
+        </select>
+
+        <input
+                type="date"
+                id="dueDate">
+
+        <button class="add-btn" onclick="addTask()">
+            Add Task
+        </button>
+
+        <p id="message"></p>
+
+    </div>
+
+
+    <div class="tasks">
+
+        <h2>📋 My Tasks</h2>
+
+        <div id="taskList"></div>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
